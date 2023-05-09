@@ -4,13 +4,13 @@ RSpec.describe User, type: :model do
   describe 'User Validations' do
     before(:each) do
       @user = User.new(first_name: 'John', last_name: 'Doe', email: 'test@test.com', password: 'password',
-      password_confirmation: 'password')
+                       password_confirmation: 'password')
     end
 
     describe 'when a new user is created with valid credentials' do
       it 'should create a new user successfully' do
         expect(@user).to be_valid
-        expect{@user.save}.to change {User.count}.by(1)
+        expect { @user.save }.to change { User.count }.by(1)
       end
     end
 
@@ -63,10 +63,11 @@ RSpec.describe User, type: :model do
 
       describe 'email must be unique' do
         it 'there cannot be two of the same email' do
-          @user1 = User.new(first_name: 'Jane', last_name: 'Doe', email: 'TEST@TEST.com', password: 'pass', password_confirmation: 'pass')
+          @user1 = User.new(first_name: 'Jane', last_name: 'Doe', email: 'TEST@TEST.com', password: 'pass',
+                            password_confirmation: 'pass')
           @user.save
           @user1.save
-          
+
           expect(@user1).not_to be_valid
           expect(@user1.errors.full_messages).to include('Email has already been taken')
         end
@@ -75,11 +76,29 @@ RSpec.describe User, type: :model do
 
     describe '.authenticate_with_credentials' do
       # examples for this class method here
-      it 'should not let user log in if credentials are invalid' do
-        
+      it 'return user instance on successful authentication' do
+        @user.save
+        authenticated_user = User.authenticate_with_credentials('test@test.com', 'password')
+        expect(authenticated_user).to eq(@user)
+      end
+
+      describe 'successful authentication if user has trailing spaces in the email input' do
+        it 'successful authentication on trailing spaces' do
+          @user.save
+          authenticated_user = User.authenticate_with_credentials('test@test.com  ', 'password')
+          expect(authenticated_user).to eq(@user)
+        end
+      end
+
+      describe 'successful authentication if user typed in the wrong case' do
+        it 'successful authentication on with uppercase letters in the email' do
+          @user.save
+          authenticated_user = User.authenticate_with_credentials('TEST@TEST.com', 'password')
+          expect(authenticated_user).to eq(@user)
+        end
       end
     end
 
-    # Rspec and before each
+
   end
 end
