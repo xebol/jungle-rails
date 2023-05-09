@@ -76,7 +76,7 @@ RSpec.describe User, type: :model do
   end
 end
 
-describe '.authenticate_with_credentials' do
+describe 'Authenticate With Credentials' do
   before(:each) do
     @user = User.new(first_name: 'John', last_name: 'Doe', email: 'test@test.com', password: 'password', password_confirmation: 'password')
     @user.save
@@ -95,7 +95,7 @@ describe '.authenticate_with_credentials' do
   end
 
   describe 'successful authentication if user typed in the wrong case' do
-    it 'successful authentication on with uppercase letters in the email' do
+    it 'successful authentication with uppercase letters in the email' do
       authenticated_user = User.authenticate_with_credentials('TEST@TEST.com', 'password')
       expect(authenticated_user).to eq(@user)
     end
