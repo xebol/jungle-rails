@@ -73,32 +73,39 @@ RSpec.describe User, type: :model do
         end
       end
     end
-
-    describe '.authenticate_with_credentials' do
-      # examples for this class method here
-      it 'return user instance on successful authentication' do
-        @user.save
-        authenticated_user = User.authenticate_with_credentials('test@test.com', 'password')
-        expect(authenticated_user).to eq(@user)
-      end
-
-      describe 'successful authentication if user has trailing spaces in the email input' do
-        it 'successful authentication on trailing spaces' do
-          @user.save
-          authenticated_user = User.authenticate_with_credentials('test@test.com  ', 'password')
-          expect(authenticated_user).to eq(@user)
-        end
-      end
-
-      describe 'successful authentication if user typed in the wrong case' do
-        it 'successful authentication on with uppercase letters in the email' do
-          @user.save
-          authenticated_user = User.authenticate_with_credentials('TEST@TEST.com', 'password')
-          expect(authenticated_user).to eq(@user)
-        end
-      end
-    end
-
-
   end
+end
+
+describe '.authenticate_with_credentials' do
+  before(:each) do
+    @user = User.new(first_name: 'John', last_name: 'Doe', email: 'test@test.com', password: 'password', password_confirmation: 'password')
+    @user.save
+  end
+
+  it 'return user instance on successful authentication' do
+    authenticated_user = User.authenticate_with_credentials('test@test.com', 'password')
+    expect(authenticated_user).to eq(@user)
+  end
+
+  describe 'successful authentication if user has trailing spaces in the email input' do
+    it 'successful authentication on trailing spaces' do
+      authenticated_user = User.authenticate_with_credentials('test@test.com  ', 'password')
+      expect(authenticated_user).to eq(@user)
+    end
+  end
+
+  describe 'successful authentication if user typed in the wrong case' do
+    it 'successful authentication on with uppercase letters in the email' do
+      authenticated_user = User.authenticate_with_credentials('TEST@TEST.com', 'password')
+      expect(authenticated_user).to eq(@user)
+    end
+  end
+
+  describe 'failed authentication if user typed in the wrong credentials' do
+    it 'should not let user log in if email and password do not match' do
+      authenticated_user = User.authenticate_with_credentials('t@t.com', 'pass')
+      expect(authenticated_user).to_not eq(@user)
+    end
+  end
+
 end
