@@ -2,6 +2,11 @@
 
 A mini e-commerce application built with Rails 6.1 for purposes of teaching Rails by example.
 
+# Final Product
+!["When a user visits the website the index page renders and shows the nav bar with links to products, categories, about us page, and the log out button"](https://github.com/xebol/jungle-rails/blob/master/docs/Screenshot%202023-05-09%20at%208.11.01%20PM.png?raw=true)
+!["When a product is sold out, a sold out badge is displayed and the add to cart button is disabled"](https://github.com/xebol/jungle-rails/blob/master/docs/Screenshot%202023-05-09%20at%208.11.28%20PM.png?raw=true)
+!["Cart page shows the total amount and the products in the cart. The user can also add or delete item from their cart."](https://github.com/xebol/jungle-rails/blob/master/docs/Screenshot%202023-05-09%20at%208.12.49%20PM.png?raw=true)
+
 ## Setup
 
 1. Run `bundle install` to install dependencies
