@@ -29,3 +29,20 @@ More information in their docs: <https://stripe.com/docs/testing#cards>
 - Bootstrap 5
 - PostgreSQL 9.x
 - Stripe
+- Rspec
+- Cypress
+
+## Rspec
+- To instal rspec, do 'rails g rspec:install'
+- To run rspec tests: 'bundle exec rspec --format documentation'.
+
+
+## Cypress
+- To install cypress, do 'npm install cypress@9.7.0 --save-dev'
+- Add necessary gems: 'group :development, :test do
+  gem "cypress-rails"
+  gem 'database_cleaner-active_record'
+end'
+- Initialize cypress: rails cypress:init
+- To run cypress: 'rails cypress:open'
+
